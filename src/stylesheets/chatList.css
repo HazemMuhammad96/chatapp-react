@@ -1,0 +1,81 @@
+.chatListContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background-color: #DDEBFF;
+  
+  }
+  
+  .chatsHeader {
+display: flex;
+font-weight: bold;
+justify-content: space-between;
+align-items: center;
+padding: 10px 10px 0px 10px;
+  }
+
+  .composeHeader {
+    display: flex;
+    padding: 15px 10px;
+    font-weight: bold; 
+    z-index: 2; 
+    padding-bottom: 30px;
+    justify-content: space-between;
+    align-items: center;
+  
+  }
+
+  .composeTextField {
+    flex-grow: 1;
+    background: #F5F9FF;
+    border: 2px solid #ffffff00;
+    padding: 8px 8px;
+    border-radius: 20px;
+    min-width: 10px;
+    outline: none;
+    margin-right: 10px;
+  }
+
+  .composeButton {
+    border-radius: 20px;
+    padding: 4px;
+    flex-grow: 0;
+    height: max-content;
+    aspect-ratio: 1 / 1; 
+    display: flex;
+    align-items: center;
+
+  }
+  
+  .composeButton:hover {
+    background-color: #F5F9FF;
+  }
+  
+  .chatListFragment {
+    flex-grow: 1;
+    overflow-y: scroll;
+    scrollbar-width: 0px;
+  }
+
+  .chatListFragment::-webkit-scrollbar{
+    display: none;
+  }
+
+  /* Items */
+
+  .chatItem {
+    padding: 15px 10px;
+    font-weight: bold;
+    word-wrap: break-word;
+    
+  }
+  
+  .chatItem:hover {
+    background-color: #F5F9FF
+  }
+  
+
+  
+
+  

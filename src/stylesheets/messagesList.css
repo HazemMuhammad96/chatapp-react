@@ -1,0 +1,82 @@
+.messagesListContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.chatHeader {
+    display: flex;
+    background-color: #F5F9FF;
+    padding: 15px 10px;
+    font-weight: bold; 
+    z-index: 2; 
+  }
+  
+  .messagesList {
+
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0px 10px;
+  }
+
+
+  .inputFragment {
+    display: flex;
+    padding: 8px;
+    }
+
+  .messageTextField{ 
+    flex-grow: 1;
+    background: #D5DBE6;
+    border: 2px solid #ffffff00;
+    padding: 8px 8px;
+    border-radius: 20px;
+    outline: none;
+    margin-right: 10px;
+
+  }
+
+  .sendButton {
+    flex-grow: 0;
+    border-radius: 100px;
+    height: 25px;
+    padding: 4px;
+    /* position: relative; */
+    /* top: 7px; */
+    /* margin-left: 11px; */
+  }
+  
+  .sendButton:hover {
+    background-color: #C8D2E3;
+  }
+
+
+  /*Message Boxes*/
+  .message {
+    padding: 8px 16px;
+    display: inline-block;
+    border-radius: 20px;
+    width: auto;
+    max-width: 450px;
+    word-wrap: break-word;
+    text-align: left;
+  }
+
+  .sentMessage {
+    background-color: #ADCDFF;
+    color: white;
+    margin: 10px 0px;
+    margin-left: 50px;
+  }
+  
+  .recievedMessage{
+    background-color: #D5DBE6;
+    margin-top: 2px;
+  }
+
+  .typingIndecator {
+    background-color: #C0C5CF;
+    margin-top: 2px;
+    font-style: italic;
+    color: #7F7F7F;
+  }
+  
