@@ -1,5 +1,5 @@
 import { Divider } from '@material-ui/core';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import addIcon from "../add.svg"
 import { useHistory } from 'react-router-dom';
 import { useContext } from 'react';
@@ -7,21 +7,57 @@ import { SocketContext } from '../pages/chats';
 import UserBubble from './userBubble';
 import "../stylesheets/chatList.css"
 import { signOutRequest } from '../data/requests';
+import { useEffect } from 'react';
 
 
 function Chat({ chat }) {
 
-    const history = useHistory();
+    const history = useHistory()
+    const [color, setColor] = useState("#C8DFFF")
+    const socket = useContext(SocketContext)
 
     function onRoomClicked(e) {
-        history.push(`/chats/${chat}`)
+
+        socket.emit("seenIndecator", { to: chat.recipients, lastSeen: true })
+        setColor("transparent")
+        history.push(`/chats/${chat.recipients.toString()}`)
+
     }
 
+    // console.log("chat seeeeeeeeen")
+    // var isSeen
+    // if (chat.seen2)
+    //     isSeen = (chat.seen2.filter(val => val.recipient == localStorage.getItem("currentUserId"))[0])
+    // console.log(isSeen)
+
+
+    useEffect(() => {
+        if (chat.seen) {
+            console.log("last   " + chat.seen)
+            setColor(chat.seen ? "transparent" : "#C8DFFF")
+        }
+    }, [])
+
+
+
     return (
-        <div onClick={onRoomClicked}>
-            <div className="unselectable chatItem">
-                {chat.toString()}
+        <div className="unselectable" onClick={onRoomClicked} style={{
+            background: color
+        }}>
+            <div className="chatItem">
+                {chat.recipients.toString()}
+
+                <div style={{
+                    marginTop: "3px", fontWeight: "normal",
+                    fontSize: "0.9em", lineBreak: "none",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                }}>
+                    {chat.last.text}
+                </div>
             </div>
+
 
             <Divider />
         </div>

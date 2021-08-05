@@ -75,6 +75,7 @@ export default function MessagesList() {
 
     useEffect(() => {
         if (chatId) {
+
             var recievers = []
             recievers = chatId.split(",")
             const recipients = [localStorage.getItem("currentUserId"), ...recievers]
@@ -110,17 +111,25 @@ export default function MessagesList() {
 
                 }
             })
+
+
         }
+
         return () => {
             socket.off(`RecieveMessage-${chatId}`)
             socket.off(`typing-${chatId}`)
         }
+
+
     }, [chatId])
 
     useEffect(() => {
+  
         if (lastMessageRef.current) {
             lastMessageRef.current.scrollIntoView({ smooth: true })
         }
+
+
     })
 
     function onSendClicked(e) {
@@ -128,12 +137,16 @@ export default function MessagesList() {
         socket.emit(`sendMessage`, { to: recipients, message: messageRef.current.value })
         messageRef.current.value = null
         socket.emit("typing", { to: recipients, indicator: false })
+        socket.emit("seenIndecator", { to: recipients, lastSeen: true })
+
     }
 
     function handleTyping(e) {
         const recipients = chatId.split(",")
         socket.emit("typing", { to: recipients, indicator: messageRef.current.value.length != 0 })
+        
     }
+
 
 
     if (chatId)
@@ -147,6 +160,7 @@ export default function MessagesList() {
                 <div className="messagesList">
                     <div>
                         {
+                            
                             messages.map((m, i) => {
                                 const last = messages.length - 1 == i
                                 if (m.from == localStorage.getItem("currentUserId")) {

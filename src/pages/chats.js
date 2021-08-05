@@ -27,11 +27,8 @@ export default function Chats() {
         axios.post(`${API_LINK}/chats/`, { username: currentUser }, { withCredentials: true })
             .then(res => {
                 console.log(res.data)
-                const retrievedChats = res.data.map((chat) => {
-                    const recipients = chat.recipients
-
-                    return recipients.filter(val => val != currentUser)
-                })
+                const retrievedChats = res.data
+                console.log("chatsssss")
                 console.log(retrievedChats)
                 setChats([...retrievedChats])
             })
@@ -53,16 +50,52 @@ export default function Chats() {
             console.log(`connect_error due to ${err.message}`);
         });
 
-        socket.on("RecieveRoom", (room) => {
+
+
+        socket.on("RecieveRoom", (chatId) => {
+            console.log(`receivedRoom ${chatId}`)
+
             setChats(prevRooms => {
-                return [room, ...prevRooms]
+                return [...prevRooms, {
+                    recipients: chatId.toString().split(","),
+                    last: {
+                        from: "hint",
+                        text: "Send a message...",
+                        sentAt: new Date().getTime(),
+                    }
+                }]
             })
-            console.log(`receivedRoom ${room}`)
+
+
         })
 
 
         return () => socket.close()
     }, [])
+
+    useEffect(() => {
+
+
+        socket.on("RecieveNotification", ({ chatId, last, seen }) => {
+            const index = chats.findIndex(current => {
+                return current.recipients.toString() == chatId
+            }
+            )
+
+            if (chats[index]) {
+                chats[index].last = last
+                chats[index].seen = seen
+            }
+
+            if (chats && chats.length > 1)
+                chats.sort((first, second) => first.last.sentAt > second.last.sentAt ? -1 : 1)
+            setChats([...chats])
+
+        })
+
+
+
+    }, [chats])
 
     return (
         <SocketContext.Provider value={socket}>
